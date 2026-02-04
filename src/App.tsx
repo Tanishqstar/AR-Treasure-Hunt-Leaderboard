@@ -406,11 +406,11 @@ function App() {
 
   // Fetch initial data and setup real-time subscription
   useEffect(() => {
-    if (!supabase) {
+    const client = supabase;
+    if (!client) {
       setLoading(false);
       return;
     }
-    const client = supabase;
 
     fetchEntries();
 
@@ -432,8 +432,8 @@ function App() {
   }, []);
 
   const fetchEntries = async () => {
-    if (!supabase) return;
     const client = supabase;
+    if (!client) return;
 
     const { data, error } = await client
       .from('leaderboard')
@@ -449,8 +449,8 @@ function App() {
   };
 
   const addEntry = async (entry: Omit<LeaderboardEntry, 'id'>) => {
-    if (!supabase) return;
     const client = supabase;
+    if (!client) return;
 
     const { error } = await client
       .from('leaderboard')
@@ -465,8 +465,8 @@ function App() {
   };
 
   const deleteEntry = async (id: string) => {
-    if (!supabase) return;
     const client = supabase;
+    if (!client) return;
 
     const { error } = await client
       .from('leaderboard')
