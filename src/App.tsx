@@ -432,8 +432,9 @@ function App() {
 
   const fetchEntries = async () => {
     if (!supabase) return;
+    const client = supabase;
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('leaderboard')
       .select('*')
       .order('time_taken', { ascending: true });
@@ -448,8 +449,9 @@ function App() {
 
   const addEntry = async (entry: Omit<LeaderboardEntry, 'id'>) => {
     if (!supabase) return;
+    const client = supabase;
 
-    const { error } = await supabase
+    const { error } = await client
       .from('leaderboard')
       .insert([entry]);
 
@@ -463,8 +465,9 @@ function App() {
 
   const deleteEntry = async (id: string) => {
     if (!supabase) return;
+    const client = supabase;
 
-    const { error } = await supabase
+    const { error } = await client
       .from('leaderboard')
       .delete()
       .eq('id', id);
@@ -479,7 +482,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19]">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -487,7 +490,7 @@ function App() {
 
   if (!supabase) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19] p-4 text-center">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4 text-center">
         <div className="max-w-md p-8 rounded-3xl bg-[#0F1623] border border-red-500/20 shadow-2xl">
           <ShieldAlert className="w-16 h-16 text-red-500 mx-auto mb-6" />
           <h2 className="text-2xl font-bold text-white mb-4 font-outfit">Configuration Required</h2>
