@@ -494,8 +494,8 @@ function App() {
           <p className="text-slate-400 mb-6">
             The Supabase URL and Anon Key are missing. If you are on Vercel, please add
             <code className="text-cyan-400 px-2 py-1 bg-black/30 rounded mx-1">VITE_SUPABASE_URL</code> and
-            <code className="text-cyan-400 px-2 py-1 bg-black/30 rounded mx-1">VITE_SUPABASE_ANON_KEY</code> 
-            to your Project Settings -> Environment Variables.
+            <code className="text-cyan-400 px-2 py-1 bg-black/30 rounded mx-1">VITE_SUPABASE_ANON_KEY</code>
+            to your Project Settings and then Environment Variables.
           </p>
           <button
             onClick={() => window.location.reload()}
