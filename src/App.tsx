@@ -406,6 +406,11 @@ function App() {
 
   // Fetch initial data and setup real-time subscription
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     fetchEntries();
 
     // Subscribe to real-time changes
@@ -426,6 +431,8 @@ function App() {
   }, []);
 
   const fetchEntries = async () => {
+    if (!supabase) return;
+
     const { data, error } = await supabase
       .from('leaderboard')
       .select('*')
@@ -440,6 +447,8 @@ function App() {
   };
 
   const addEntry = async (entry: Omit<LeaderboardEntry, 'id'>) => {
+    if (!supabase) return;
+
     const { error } = await supabase
       .from('leaderboard')
       .insert([entry]);
@@ -453,6 +462,8 @@ function App() {
   };
 
   const deleteEntry = async (id: string) => {
+    if (!supabase) return;
+
     const { error } = await supabase
       .from('leaderboard')
       .delete()
@@ -470,6 +481,29 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0B0F19]">
         <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!supabase) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0B0F19] p-4 text-center">
+        <div className="max-w-md p-8 rounded-3xl bg-[#0F1623] border border-red-500/20 shadow-2xl">
+          <ShieldAlert className="w-16 h-16 text-red-500 mx-auto mb-6" />
+          <h2 className="text-2xl font-bold text-white mb-4 font-outfit">Configuration Required</h2>
+          <p className="text-slate-400 mb-6">
+            The Supabase URL and Anon Key are missing. If you are on Vercel, please add
+            <code className="text-cyan-400 px-2 py-1 bg-black/30 rounded mx-1">VITE_SUPABASE_URL</code> and
+            <code className="text-cyan-400 px-2 py-1 bg-black/30 rounded mx-1">VITE_SUPABASE_ANON_KEY</code> 
+            to your Project Settings -> Environment Variables.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-white text-black rounded-xl font-bold hover:bg-slate-200 transition-all"
+          >
+            I've Added Them, Refresh
+          </button>
+        </div>
       </div>
     );
   }
