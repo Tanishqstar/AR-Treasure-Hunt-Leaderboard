@@ -410,11 +410,12 @@ function App() {
       setLoading(false);
       return;
     }
+    const client = supabase;
 
     fetchEntries();
 
     // Subscribe to real-time changes
-    const channel = supabase
+    const channel = client
       .channel('leaderboard_changes')
       .on(
         'postgres_changes',
@@ -426,7 +427,7 @@ function App() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      client.removeChannel(channel);
     };
   }, []);
 
