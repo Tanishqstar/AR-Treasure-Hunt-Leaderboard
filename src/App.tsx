@@ -25,7 +25,7 @@ type LeaderboardEntry = {
   time_taken: number; // in seconds
 };
 
-const DEPARTMENTS = ['CSE', 'ECE', 'EE', 'IT', 'MECH', 'CIVIL', 'AI/DS'];
+const DEPARTMENTS = ['CM', 'ECS', 'AIDS', 'IT', 'CS', 'VLSI', 'ENTC', 'ACT'];
 const YEARS = ['FY', 'SY', 'TY', 'BTech'];
 
 // --- Utility: Format Time (HH:MM:SS) ---
@@ -217,7 +217,7 @@ const AdminPage = ({ entries, onAdd, onDelete }: { entries: LeaderboardEntry[], 
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'admin123') setIsAdmin(true);
+    if (password === 'adminpassword001') setIsAdmin(true);
     else alert('Access Denied');
   };
 
