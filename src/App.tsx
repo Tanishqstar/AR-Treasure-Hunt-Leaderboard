@@ -11,7 +11,10 @@ import {
   Scan,
   ChevronRight,
   Hexagon,
-  Activity
+  Activity,
+  AlertTriangle,
+  Smartphone,
+  Users
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
@@ -397,6 +400,125 @@ const AdminPage = ({ entries, onAdd, onDelete }: { entries: LeaderboardEntry[], 
   );
 };
 
+// --- Page: Rules ---
+const RulesPage = () => {
+  const rules = [
+    {
+      id: 1,
+      title: "Game Area",
+      description: "The entire game takes place within the college premises. Participants must not leave the college, enter any classrooms, or access any offices. All hints are hidden within the ground floor (foyer area) and corridors across the seven floors.",
+      icon: Map
+    },
+    {
+      id: 2,
+      title: "Unique Hints",
+      description: "Each hint is unique and not repeated anywhere in the game.",
+      icon: Target
+    },
+    {
+      id: 3,
+      title: "Hint Scanning & Team Leader",
+      description: "Only the team leader will be allowed to use the Snapchat filter (provided before the game starts) to scan hints.",
+      icon: Scan
+    },
+    {
+      id: 4,
+      title: "Smartphone Restriction",
+      description: "Other than the team leader, no team member is allowed to use their smartphone during the game.",
+      icon: Smartphone
+    },
+    {
+      id: 5,
+      title: "Team Unity",
+      description: "Teams must stay together throughout the hunt. Splitting up is not allowed.",
+      icon: Users
+    },
+    {
+      id: 6,
+      title: "Movement Restrictions",
+      description: "Lifts are not allowed. All teams must use the stairs to move between floors.",
+      icon: Activity
+    },
+    {
+      id: 7,
+      title: "Scanning Hints",
+      description: "Once a team finds a hint, they must scan it properly using the filter to reveal the next clue. Ensure the scan is clear—zoom in/out, and adjust angles if necessary.",
+      icon: Scan
+    },
+    {
+      id: 8,
+      title: "Winning Criteria",
+      description: "The team that completes the hunt in the shortest time wins. Each group will have a volunteer tracking their time from start to finish.",
+      icon: Trophy
+    },
+    {
+      id: 9,
+      title: "Rule Violation",
+      description: "Any team found violating these rules will be disqualified from the game.",
+      icon: ShieldAlert
+    }
+  ];
+
+  return (
+    <div className="container max-w-4xl mx-auto px-4 py-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <header className="mb-12 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6"
+        >
+          <ShieldAlert className="w-4 h-4" />
+          PROTOCOL BRIEFING
+        </motion.div>
+        <h1 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight font-outfit uppercase">
+          MISSION <span className="text-cyan-400">RULES</span>
+        </h1>
+        <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          Attention Participants: Strictly adhere to the following directives to ensure mission success.
+        </p>
+      </header>
+
+      <div className="grid gap-6">
+        {rules.map((rule, idx) => (
+          <motion.div
+            key={rule.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0F1623]/80 backdrop-blur-xl p-6 hover:border-cyan-500/30 transition-all"
+          >
+            <div className="flex gap-6 items-start relative z-10">
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                <rule.icon className="w-6 h-6 text-cyan-400" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-cyan-500 font-mono font-bold text-sm">0{rule.id}</span>
+                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors font-outfit">{rule.title}</h3>
+                </div>
+                <p className="text-slate-400 leading-relaxed text-sm md:text-base">
+                  {rule.description}
+                </p>
+              </div>
+            </div>
+            {/* Background design element */}
+            <div className="absolute top-[-20%] right-[-5%] w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full" />
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-red-500/10 to-transparent border border-red-500/20 text-center">
+        <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+        <h4 className="text-xl font-bold text-white mb-2 font-outfit">FINAL WARNING</h4>
+        <p className="text-slate-400">
+          Any breach of these protocols will result in immediate disqualification.
+          Fair play is essential for a successful hunt.
+        </p>
+      </div>
+    </div>
+  );
+};
+
 // --- App Root ---
 function App() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
@@ -527,7 +649,10 @@ function App() {
             </div>
             <span>AR <span className="text-cyan-400">HUNT</span></span>
           </Link>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-2 md:gap-4 items-center">
+            <Link to="/rules" className={`px-4 py-2 rounded-lg text-sm font-medium transition-all text-center ${location.pathname === '/rules' ? 'text-white bg-white/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              Rules
+            </Link>
             {isHome && (
               <Link to="/admin" className="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all text-center">
                 Admin Center
@@ -539,6 +664,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<LeaderboardPage entries={entries} />} />
+        <Route path="/rules" element={<RulesPage />} />
         <Route path="/admin" element={<AdminPage entries={entries} onAdd={addEntry} onDelete={deleteEntry} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
