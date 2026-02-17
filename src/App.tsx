@@ -524,7 +524,7 @@ function App() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
-  const isHome = location.pathname === '/';
+
 
   // Fetch initial data and setup real-time subscription
   useEffect(() => {
@@ -653,11 +653,7 @@ function App() {
             <Link to="/rules" className={`px-4 py-2 rounded-lg text-sm font-medium transition-all text-center ${location.pathname === '/rules' ? 'text-slate-900 bg-slate-100' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`}>
               Rules
             </Link>
-            {isHome && (
-              <Link to="/admin" className="px-4 py-2 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all text-center">
-                Admin Center
-              </Link>
-            )}
+
           </div>
         </div>
       </nav>
